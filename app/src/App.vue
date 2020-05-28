@@ -10,8 +10,8 @@ import Main from "./components/Main.vue";
 export default {
   name: "App",
   components: {
-    Main,
-  },
+    Main
+  }
 };
 </script>
 
@@ -25,7 +25,6 @@ html {
 
 body {
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 #app {
