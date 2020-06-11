@@ -15,16 +15,9 @@
     </div>
     <div class="list card">
       <h1 v-if="numbers.length == 0">No Items Added</h1>
-      <div
-        v-else
-        class="list-item"
-        v-for="(number, index) in numbers"
-        v-bind:key="number"
-      >
+      <div v-else class="list-item" v-for="(number, index) in numbers" v-bind:key="number">
         <li class="list-number">{{ number }}</li>
-        <button class="action rm" v-on:click="removeNumber(index)">
-          Remove
-        </button>
+        <button class="action rm" v-on:click="removeNumber(index)">Remove</button>
       </div>
     </div>
   </div>
@@ -37,14 +30,13 @@ export default {
   name: "Main",
   data() {
     return {
-      numbers: [],
+      numbers: []
     };
   },
   methods: {
     addNumber: function() {
       let element = this.$refs.inputField;
       let pat = /^(91)[0-9]{10}/g;
-      console.log("check");
       if (pat.test(element.value)) {
         this.numbers.push(element.value);
         element.value = "";
@@ -64,18 +56,12 @@ export default {
     submit: function() {
       if (this.numbers.length == 0) alert("Add Numbers to Continue");
       else {
-        console.log("submit");
-        axios
-          .post("http://localhost:2155/submit", { numbers: this.numbers })
-          .then((res) => {
-            alert(res.data);
-          })
-          .catch((err) => {
-            alert(err);
-          });
+        axios.post("/submit", { numbers: this.numbers }).catch(err => {
+          console.error(err);
+        });
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

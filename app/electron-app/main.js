@@ -1,12 +1,17 @@
 const electron = require("electron");
 const express = require("express");
 const cors = require("cors");
+let os = require("shelljs");
+let fs = require("fs");
+let bp = require("body-parser");
+let file = "../../info.txt";
 
 const { app, BrowserWindow, dialog } = electron;
 
 let window;
-app.on("ready", function () {
+app.on("ready", function() {
   window = new BrowserWindow({});
+
   window.loadURL(
     process.argv[2] == "--prod"
       ? "http://localhost:2155"
@@ -14,15 +19,23 @@ app.on("ready", function () {
   );
 });
 
-let expressApp = express();
+function numbers(data) {
+  data.forEach((element) => {
+    fs.writeFileSync(file, element + " HI");
+  });
 
+  os.exec("cd ..");
+  os.exec("cd ..");
+  os.exec("python init.py");
+}
+
+let expressApp = express();
 expressApp.use(express.static("public"));
 expressApp.use(cors());
-expressApp.post("/submit", function (req, res) {
-  dialog.showMessageBox({
-    buttons: ["Yes"],
-    message: JSON.stringify(req.body),
-  });
+expressApp.use(bp.json());
+
+expressApp.post("/submit", function(req, res) {
+  numbers(req.body.numbers);
   res.status(200).send("yes");
 });
 expressApp.listen(2155);
