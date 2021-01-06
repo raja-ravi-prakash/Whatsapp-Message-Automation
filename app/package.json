@@ -10,7 +10,7 @@
     "start": "start npm run serve && start npm run electron-dev"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "vue": "^2.6.11"
   },
